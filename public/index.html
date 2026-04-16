@@ -1,6 +1,3 @@
-<!-- =========================
-  index.html
-========================= -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,19 +5,25 @@
   <title>GhostBoards QR Studio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#050608" />
+
+  <!-- FAVICON CALLED PROPERLY -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body class="theme-ghost">
+
   <header class="gb-header">
     <div class="gb-header-left">
-      <!-- Replace with real GhostBoards logo asset -->
       <img src="ghostboards-logo.svg" alt="GhostBoards" class="gb-logo" />
       <div class="gb-title-block">
         <h1>GhostBoards QR Studio</h1>
         <p>Create print‑ready QR codes, care guides, and how‑to video links.</p>
       </div>
     </div>
+
     <div class="gb-header-right">
       <nav class="gb-nav">
         <button class="gb-nav-btn gb-nav-btn-active" data-view="qr">QR Studio</button>
@@ -32,31 +35,30 @@
   </header>
 
   <main class="gb-main">
-    <!-- ========== QR STUDIO VIEW ========== -->
+
+    <!-- QR STUDIO -->
     <section id="view-qr" class="gb-view gb-view-active">
+
       <section class="gb-panel">
         <h2>Create QR</h2>
 
         <label class="gb-label">
-          Target URL (care page or how‑to)
-          <input id="targetUrl" type="url" class="gb-input"
-                 placeholder="https://ghostboards.com/care/your-board" />
+          Target URL
+          <input id="targetUrl" type="url" class="gb-input" placeholder="https://ghostboards.com/care/your-board" />
         </label>
 
         <label class="gb-label">
-          Optional video URL (YouTube, Vimeo, etc.)
-          <input id="videoUrl" type="url" class="gb-input"
-                 placeholder="https://youtube.com/..." />
+          Optional video URL
+          <input id="videoUrl" type="url" class="gb-input" placeholder="https://youtube.com/..." />
         </label>
 
         <label class="gb-label">
           Instructions title
-          <input id="titleInput" type="text" class="gb-input"
-                 placeholder="Board Care Guide" />
+          <input id="titleInput" type="text" class="gb-input" placeholder="Board Care Guide" />
         </label>
 
         <label class="gb-label">
-          Short instructions (printed under QR)
+          Short instructions
           <textarea id="instructionsInput" class="gb-textarea" rows="3"
             placeholder="1. Wipe with damp cloth only. 2. Avoid soaking wheels. 3. Store in a cool, dry place."></textarea>
         </label>
@@ -64,14 +66,15 @@
         <div class="gb-row">
           <div class="gb-col">
             <label class="gb-label">
-              QR size (inches)
+              QR size
               <select id="sizeSelect" class="gb-select">
-                <option value="3">3 × 3 (default)</option>
+                <option value="3">3 × 3</option>
                 <option value="2">2 × 2</option>
                 <option value="4">4 × 4</option>
               </select>
             </label>
           </div>
+
           <div class="gb-col">
             <label class="gb-label">
               Dot color
@@ -101,18 +104,19 @@
 
       <section class="gb-panel">
         <h2>Preview & Export</h2>
+
         <div id="previewCard" class="preview-card">
           <div class="preview-header">
-            <img src="ghostboards-logo.svg" alt="GhostBoards" class="preview-logo" />
+            <img src="ghostboards-logo.svg" class="preview-logo" />
             <div>
               <h3 id="previewTitle">Board Care Guide</h3>
-              <p class="preview-subtitle">GhostBoards Care &amp; How‑To</p>
+              <p class="preview-subtitle">GhostBoards Care & How‑To</p>
             </div>
           </div>
+
           <div id="qrContainer" class="qr-container"></div>
-          <p id="previewInstructions" class="preview-text">
-            1. Wipe with damp cloth only. 2. Avoid soaking wheels. 3. Store in a cool, dry place.
-          </p>
+
+          <p id="previewInstructions" class="preview-text"></p>
           <p id="previewVideoNote" class="preview-video-note"></p>
         </div>
 
@@ -125,9 +129,6 @@
 
       <section class="gb-panel">
         <h2>Saved Presets</h2>
-        <p class="gb-help-text">
-          Save layouts like “Standard Board Care”, “Wheel Care”, “Beginner How‑To”.
-        </p>
         <div class="gb-row">
           <input id="presetName" type="text" class="gb-input" placeholder="Preset name" />
           <button id="savePresetBtn" class="gb-btn ghost-secondary">Save Preset</button>
@@ -138,37 +139,34 @@
       <section class="gb-panel">
         <h2>How to print clear vs white labels</h2>
         <ol class="gb-steps">
-          <li><strong>Choose background mode:</strong> “Clear” for transparent stickers on clear boards, “White label” for normal paper labels.</li>
-          <li><strong>For clear stickers:</strong> Use clear vinyl/clear sticker paper in your printer. Set background mode to “Clear”. Only the dark squares and logo will print; everything else stays transparent.</li>
-          <li><strong>For white labels:</strong> Use regular white label sheets or paper. Set background mode to “White label”. The QR will have a solid white box behind it.</li>
-          <li><strong>For print shops / flatbed printers:</strong> Export SVG, send the file, and tell them: “Print only the dark QR dots and logo on clear vinyl, no white background.”</li>
-          <li><strong>Always test scan:</strong> After printing, scan one sticker with your phone to confirm it reads instantly before doing a big batch.</li>
+          <li>Choose “Clear” for transparent stickers, “White label” for normal paper.</li>
+          <li>Clear stickers: use clear vinyl paper. Only dots print.</li>
+          <li>White labels: prints with a white box behind the QR.</li>
+          <li>Print shops: export SVG and request “no white background”.</li>
+          <li>Always test scan before mass printing.</li>
         </ol>
       </section>
+
     </section>
 
-    <!-- ========== VIDEOS VIEW ========== -->
+    <!-- VIDEOS -->
     <section id="view-videos" class="gb-view">
       <section class="gb-panel">
         <h2>Video Library</h2>
-        <p class="gb-help-text">
-          Store links to your how‑to videos (YouTube, Vimeo, or hosted on GhostBoards) and categorize them.
-        </p>
-
         <div class="gb-row">
           <label class="gb-label gb-col">
             Title
-            <input id="videoTitle" type="text" class="gb-input" placeholder="How to care for your GhostBoard" />
+            <input id="videoTitle" type="text" class="gb-input" />
           </label>
           <label class="gb-label gb-col">
             Category
-            <input id="videoCategory" type="text" class="gb-input" placeholder="Care, Tricks, Setup..." />
+            <input id="videoCategory" type="text" class="gb-input" />
           </label>
         </div>
 
         <label class="gb-label">
           Video URL
-          <input id="videoUrlInput" type="url" class="gb-input" placeholder="https://youtube.com/..." />
+          <input id="videoUrlInput" type="url" class="gb-input" />
         </label>
 
         <button id="addVideoBtn" class="gb-btn ghost-primary">Add Video</button>
@@ -176,34 +174,29 @@
 
       <section class="gb-panel">
         <h2>Search Videos</h2>
-        <input id="videoSearch" type="text" class="gb-input" placeholder="Search by title or category" />
+        <input id="videoSearch" type="text" class="gb-input" />
         <ul id="videoList" class="item-list"></ul>
       </section>
     </section>
 
-    <!-- ========== GUIDES VIEW ========== -->
+    <!-- GUIDES -->
     <section id="view-guides" class="gb-view">
       <section class="gb-panel">
-        <h2>Care & How‑To Guides</h2>
-        <p class="gb-help-text">
-          Write full text guides, categorize them, and later link them from QR codes.
-        </p>
-
+        <h2>Guides</h2>
         <div class="gb-row">
           <label class="gb-label gb-col">
             Title
-            <input id="guideTitle" type="text" class="gb-input" placeholder="Full Board Care Guide" />
+            <input id="guideTitle" type="text" class="gb-input" />
           </label>
           <label class="gb-label gb-col">
             Category
-            <input id="guideCategory" type="text" class="gb-input" placeholder="Care, Safety, Setup..." />
+            <input id="guideCategory" type="text" class="gb-input" />
           </label>
         </div>
 
         <label class="gb-label">
           Guide content
-          <textarea id="guideContent" class="gb-textarea" rows="6"
-            placeholder="Write the full instructions here..."></textarea>
+          <textarea id="guideContent" class="gb-textarea" rows="6"></textarea>
         </label>
 
         <button id="addGuideBtn" class="gb-btn ghost-primary">Save Guide</button>
@@ -211,13 +204,13 @@
 
       <section class="gb-panel">
         <h2>Search Guides</h2>
-        <input id="guideSearch" type="text" class="gb-input" placeholder="Search by title, category, or text" />
+        <input id="guideSearch" type="text" class="gb-input" />
         <ul id="guideList" class="item-list"></ul>
       </section>
     </section>
+
   </main>
 
-  <!-- QR Code Styling library (supports PNG + SVG + transparent background) -->
   <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
   <script src="app.js"></script>
 </body>
