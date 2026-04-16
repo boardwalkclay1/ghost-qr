@@ -1,59 +1,124 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Guides</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+document.addEventListener("DOMContentLoaded", () => {
 
-  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-  <link rel="stylesheet" href="/style.css" />
-</head>
+  const titleEl = document.getElementById("guideTitle");
+  const categoryEl = document.getElementById("guideCategory");
+  const contentEl = document.getElementById("guideContent");
+  const addBtn = document.getElementById("addGuideBtn");
 
-<body>
+  const searchEl = document.getElementById("guideSearch");
+  const listEl = document.getElementById("guideList");
 
-<header class="gb-header">
-  <div class="gb-header-left">
-    <img src="/ghostboards-logo.png" class="gb-logo" />
-    <h1>Guides</h1>
-  </div>
+  // Load guides
+  function loadGuides() {
+    return JSON.parse(localStorage.getItem("guides") || "[]");
+  }
 
-  <nav class="gb-nav">
-    <a href="/index.html" class="gb-nav-btn">QR Studio</a>
-    <a href="/pages/videos.html" class="gb-nav-btn">Videos</a>
-    <a href="/pages/guides.html" class="gb-nav-btn gb-nav-btn-active">Guides</a>
-     <a href="/pages/library.html" class="gb-nav-btn">library</a>
-    <a href="/pages/how-to.html" class="gb-nav-btn">qr-manual</a>
-  </nav>
-</header>
+  // Save guides
+  function saveGuides(data) {
+    localStorage.setItem("guides", JSON.stringify(data));
+  }
 
-<main class="gb-main">
+  // Add guide
+  addBtn.onclick = () => {
+    const title = titleEl.value.trim();
+    const category = categoryEl.value.trim();
+    const content = contentEl.value.trim();
 
-  <section class="gb-panel">
-    <h2>Add Guide</h2>
+    if (!title || !content) {
+      alert("Title and content are required.");
+      return;
+    }
 
-    <label class="gb-label">Title
-      <input id="guideTitle" type="text" class="gb-input" />
-    </label>
+    const guides = loadGuides();
 
-    <label class="gb-label">Category
-      <input id="guideCategory" type="text" class="gb-input" />
-    </label>
+    guides.push({
+      id: crypto.randomUUID(),
+      title,
+      category,
+      content,
+      createdAt: Date.now()
+    });
 
-    <label class="gb-label">Content
-      <textarea id="guideContent" class="gb-textarea" rows="6"></textarea>
-    </label>
+    saveGuides(guides);
 
-    <button id="addGuideBtn" class="gb-btn ghost-primary">Save Guide</button>
-  </section>
+    titleEl.value = "";
+    categoryEl.value = "";
+    contentEl.value = "";
 
-  <section class="gb-panel">
-    <h2>Search</h2>
-    <input id="guideSearch" type="text" class="gb-input" placeholder="Search..." />
-    <ul id="guideList" class="item-list"></ul>
-  </section>
+    renderList();
+  };
 
-</main>
+  // Render list
+  function renderList() {
+    const guides = loadGuides();
+    const search = searchEl.value.toLowerCase();
 
-<script src="/js/guides.js"></script>
-</body>
-</html>
+    listEl.innerHTML = "";
+
+    guides
+      .filter(g =>
+        g.title.toLowerCase().includes(search) ||
+        g.category.toLowerCase().includes(search) ||
+        g.content.toLowerCase().includes(search)
+      )
+      .forEach(g => {
+        const li = document.createElement("li");
+        li.className = "item-card";
+        li.dataset.id = g.id;
+
+        li.innerHTML = `
+          <h3>${g.title}</h3>
+          <p><strong>Category:</strong> ${g.category || "None"}</p>
+          <p><strong>Created:</strong> ${new Date(g.createdAt).toLocaleString()}</p>
+
+          <div class="gb-row">
+            <button class="gb-btn ghost-primary" data-action="qr">Generate QR</button>
+            <button class="gb-btn ghost-secondary" data-action="copy">Copy Link</button>
+            <button class="gb-btn ghost-danger" data-action="delete">Delete</button>
+          </div>
+        `;
+
+        listEl.appendChild(li);
+      });
+  }
+
+  // Handle actions
+  listEl.addEventListener("click", e => {
+    const btn = e.target;
+    const action = btn.dataset.action;
+    if (!action) return;
+
+    const li = btn.closest("li");
+    const id = li.dataset.id;
+
+    const guides = loadGuides();
+    const guide = guides.find(g => g.id === id);
+    if (!guide) return;
+
+    // Generate QR
+    if (action === "qr") {
+      const qrUrl = `https://ghostboards.com/guide?id=${id}`;
+      localStorage.setItem("qrStudioTarget", qrUrl);
+      window.location.href = "/index.html";
+      return;
+    }
+
+    // Copy link
+    if (action === "copy") {
+      navigator.clipboard.writeText(`https://ghostboards.com/guide?id=${id}`);
+      return;
+    }
+
+    // Delete
+    if (action === "delete") {
+      const updated = guides.filter(g => g.id !== id);
+      saveGuides(updated);
+      renderList();
+      return;
+    }
+  });
+
+  searchEl.addEventListener("input", renderList);
+
+  renderList();
+});
