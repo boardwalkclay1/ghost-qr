@@ -1,23 +1,26 @@
-/* GLOBAL BACKGROUND */
+/* =========================
+   GLOBAL BACKGROUND (FAVICON)
+========================= */
 body {
   margin: 0;
   font-family: system-ui, sans-serif;
-  background: url("ghost.png") center center / cover no-repeat fixed;
+  background: url("favicon.ico") center center / cover no-repeat fixed;
   background-color: #000;
   position: relative;
+  color: #fff;
 }
 
-/* FADED OVERLAY */
+/* Fade overlay */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.55); /* fade level */
+  background: rgba(0,0,0,0.55);
   pointer-events: none;
   z-index: 0;
 }
 
-/* EVERYTHING ABOVE THE BACKGROUND */
+/* Everything above background */
 .gb-header,
 .gb-main,
 .gb-panel,
@@ -26,77 +29,202 @@ body::before {
   z-index: 2;
 }
 
-/* HEADER */
+/* =========================
+   HEADER
+========================= */
 .gb-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 16px;
-  background: rgba(0,0,0,0.65);
-  backdrop-filter: blur(6px);
-  border-bottom: 1px solid #222;
-}
-
-/* PANELS */
-.gb-panel {
   background: rgba(0,0,0,0.65);
   backdrop-filter: blur(8px);
-  border-radius: 16px;
-  padding: 16px;
-  border: 1px solid #222;
-  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
-/* TEXT */
-.gb-title-block h1,
-.gb-title-block p,
-.gb-panel h2,
-.gb-label,
-.gb-help-text,
-.gb-steps li {
+.gb-logo {
+  height: 40px;
+}
+
+.gb-title-block h1 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.gb-title-block p {
+  margin: 2px 0 0;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* =========================
+   NAV BUTTONS (BUBBLE)
+========================= */
+.gb-nav-btn {
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  background: rgba(255,255,255,0.08);
   color: #fff;
+  font-size: 0.85rem;
+  transition: 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 
-/* INPUTS */
+.gb-nav-btn:hover {
+  background: rgba(255,255,255,0.18);
+  transform: translateY(-2px);
+}
+
+.gb-nav-btn-active {
+  background: #00ff9f;
+  color: #000;
+  box-shadow: 0 0 18px rgba(0,255,159,0.5);
+}
+
+/* =========================
+   MAIN LAYOUT
+========================= */
+.gb-main {
+  max-width: 1120px;
+  margin: 20px auto;
+  padding: 0 16px 40px;
+}
+
+.gb-view {
+  display: none;
+}
+
+.gb-view-active {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+/* =========================
+   PANELS (GLASS)
+========================= */
+.gb-panel {
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
+  padding: 18px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+}
+
+.gb-panel h2 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+  color: #00ff9f;
+  letter-spacing: 0.05em;
+}
+
+/* =========================
+   INPUTS
+========================= */
 .gb-input,
 .gb-textarea,
 .gb-select {
-  background: rgba(0,0,0,0.55);
-  border: 1px solid #333;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(0,0,0,0.45);
   color: #fff;
+  font-size: 0.9rem;
+  transition: 0.2s ease;
 }
 
-/* BUTTONS */
+.gb-input:focus,
+.gb-textarea:focus,
+.gb-select:focus {
+  border-color: #00ff9f;
+  box-shadow: 0 0 10px rgba(0,255,159,0.4);
+}
+
+/* =========================
+   BUBBLE BUTTONS
+========================= */
 .gb-btn {
-  background: rgba(255,255,255,0.1);
-  border: 1px solid #444;
-  color: #fff;
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: 0.2s ease;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.4);
 }
 
+.gb-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Primary neon */
 .ghost-primary {
   background: #00ff9f;
   color: #000;
+  box-shadow: 0 0 18px rgba(0,255,159,0.5);
 }
 
+.ghost-primary:hover {
+  box-shadow: 0 0 28px rgba(0,255,159,0.7);
+}
+
+/* Secondary */
+.ghost-secondary {
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+}
+
+/* Outline */
 .ghost-outline {
-  border-color: #00ff9f;
+  background: transparent;
+  border: 2px solid #00ff9f;
   color: #00ff9f;
 }
 
-/* PREVIEW CARD */
+/* =========================
+   PREVIEW CARD
+========================= */
 .preview-card {
   background: rgba(0,0,0,0.55);
-  border: 1px solid #333;
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 16px;
-  padding: 12px;
+  padding: 14px;
   width: 3in;
   min-height: 3in;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
 }
 
-/* LISTS */
+.preview-logo {
+  height: 26px;
+}
+
+.preview-text {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+/* =========================
+   LIST ITEMS
+========================= */
 .item-card {
   background: rgba(0,0,0,0.55);
-  border: 1px solid #333;
-  border-radius: 10px;
-  padding: 10px;
-  color: #fff;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 8px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 900px) {
+  .gb-view-active {
+    grid-template-columns: 1fr;
+  }
 }
