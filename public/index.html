@@ -4,214 +4,63 @@
   <meta charset="UTF-8" />
   <title>GhostBoards QR Studio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#050608" />
-
-  <!-- FAVICON CALLED PROPERLY -->
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
-
-  <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="style.css" />
 </head>
 
-<body class="theme-ghost">
+<body>
 
-  <header class="gb-header">
-    <div class="gb-header-left">
-      <img src="ghostboards-logo.svg" alt="GhostBoards" class="gb-logo" />
-      <div class="gb-title-block">
-        <h1>GhostBoards QR Studio</h1>
-        <p>Create print‑ready QR codes, care guides, and how‑to video links.</p>
-      </div>
+<header class="gb-header">
+  <div class="gb-header-left">
+    <img src="ghostboards-logo.svg" class="gb-logo" />
+    <h1>QR Studio</h1>
+  </div>
+
+  <nav class="gb-nav">
+    <a href="index.html" class="gb-nav-btn gb-nav-btn-active">QR Studio</a>
+    <a href="videos.html" class="gb-nav-btn">Videos</a>
+    <a href="guides.html" class="gb-nav-btn">Guides</a>
+  </nav>
+</header>
+
+<main class="gb-main">
+
+  <section class="gb-panel">
+    <h2>Create QR</h2>
+
+    <label class="gb-label">Target URL
+      <input id="targetUrl" type="url" class="gb-input" />
+    </label>
+
+    <label class="gb-label">Video URL
+      <input id="videoUrl" type="url" class="gb-input" />
+    </label>
+
+    <label class="gb-label">Title
+      <input id="titleInput" type="text" class="gb-input" />
+    </label>
+
+    <label class="gb-label">Instructions
+      <textarea id="instructionsInput" class="gb-textarea" rows="3"></textarea>
+    </label>
+
+    <button id="generateBtn" class="gb-btn ghost-primary">Generate QR</button>
+  </section>
+
+  <section class="gb-panel">
+    <h2>Preview</h2>
+    <div id="qrContainer" class="qr-container"></div>
+
+    <div class="gb-row">
+      <button id="downloadPngBtn" class="gb-btn ghost-secondary">PNG</button>
+      <button id="downloadSvgBtn" class="gb-btn ghost-outline">SVG</button>
+      <button id="printBtn" class="gb-btn ghost-primary">Print</button>
     </div>
+  </section>
 
-    <div class="gb-header-right">
-      <nav class="gb-nav">
-        <button class="gb-nav-btn gb-nav-btn-active" data-view="qr">QR Studio</button>
-        <button class="gb-nav-btn" data-view="videos">Videos</button>
-        <button class="gb-nav-btn" data-view="guides">Guides</button>
-      </nav>
-      <button id="themeToggle" class="gb-btn ghost-outline">Theme</button>
-    </div>
-  </header>
+</main>
 
-  <main class="gb-main">
-
-    <!-- QR STUDIO -->
-    <section id="view-qr" class="gb-view gb-view-active">
-
-      <section class="gb-panel">
-        <h2>Create QR</h2>
-
-        <label class="gb-label">
-          Target URL
-          <input id="targetUrl" type="url" class="gb-input" placeholder="https://ghostboards.com/care/your-board" />
-        </label>
-
-        <label class="gb-label">
-          Optional video URL
-          <input id="videoUrl" type="url" class="gb-input" placeholder="https://youtube.com/..." />
-        </label>
-
-        <label class="gb-label">
-          Instructions title
-          <input id="titleInput" type="text" class="gb-input" placeholder="Board Care Guide" />
-        </label>
-
-        <label class="gb-label">
-          Short instructions
-          <textarea id="instructionsInput" class="gb-textarea" rows="3"
-            placeholder="1. Wipe with damp cloth only. 2. Avoid soaking wheels. 3. Store in a cool, dry place."></textarea>
-        </label>
-
-        <div class="gb-row">
-          <div class="gb-col">
-            <label class="gb-label">
-              QR size
-              <select id="sizeSelect" class="gb-select">
-                <option value="3">3 × 3</option>
-                <option value="2">2 × 2</option>
-                <option value="4">4 × 4</option>
-              </select>
-            </label>
-          </div>
-
-          <div class="gb-col">
-            <label class="gb-label">
-              Dot color
-              <select id="colorSelect" class="gb-select">
-                <option value="black">Black</option>
-                <option value="ghost-green">Ghost Green</option>
-                <option value="white-on-black">White on Black</option>
-              </select>
-            </label>
-          </div>
-        </div>
-
-        <div class="gb-row">
-          <div class="gb-col">
-            <label class="gb-label">
-              Background mode
-              <select id="backgroundModeSelect" class="gb-select">
-                <option value="clear">Clear (transparent)</option>
-                <option value="white">White label</option>
-              </select>
-            </label>
-          </div>
-        </div>
-
-        <button id="generateBtn" class="gb-btn ghost-primary">Generate QR</button>
-      </section>
-
-      <section class="gb-panel">
-        <h2>Preview & Export</h2>
-
-        <div id="previewCard" class="preview-card">
-          <div class="preview-header">
-            <img src="ghostboards-logo.svg" class="preview-logo" />
-            <div>
-              <h3 id="previewTitle">Board Care Guide</h3>
-              <p class="preview-subtitle">GhostBoards Care & How‑To</p>
-            </div>
-          </div>
-
-          <div id="qrContainer" class="qr-container"></div>
-
-          <p id="previewInstructions" class="preview-text"></p>
-          <p id="previewVideoNote" class="preview-video-note"></p>
-        </div>
-
-        <div class="gb-row">
-          <button id="downloadPngBtn" class="gb-btn ghost-secondary">Download PNG</button>
-          <button id="downloadSvgBtn" class="gb-btn ghost-outline">Download SVG</button>
-          <button id="printBtn" class="gb-btn ghost-primary">Print 3×3 Label</button>
-        </div>
-      </section>
-
-      <section class="gb-panel">
-        <h2>Saved Presets</h2>
-        <div class="gb-row">
-          <input id="presetName" type="text" class="gb-input" placeholder="Preset name" />
-          <button id="savePresetBtn" class="gb-btn ghost-secondary">Save Preset</button>
-        </div>
-        <ul id="presetList" class="preset-list"></ul>
-      </section>
-
-      <section class="gb-panel">
-        <h2>How to print clear vs white labels</h2>
-        <ol class="gb-steps">
-          <li>Choose “Clear” for transparent stickers, “White label” for normal paper.</li>
-          <li>Clear stickers: use clear vinyl paper. Only dots print.</li>
-          <li>White labels: prints with a white box behind the QR.</li>
-          <li>Print shops: export SVG and request “no white background”.</li>
-          <li>Always test scan before mass printing.</li>
-        </ol>
-      </section>
-
-    </section>
-
-    <!-- VIDEOS -->
-    <section id="view-videos" class="gb-view">
-      <section class="gb-panel">
-        <h2>Video Library</h2>
-        <div class="gb-row">
-          <label class="gb-label gb-col">
-            Title
-            <input id="videoTitle" type="text" class="gb-input" />
-          </label>
-          <label class="gb-label gb-col">
-            Category
-            <input id="videoCategory" type="text" class="gb-input" />
-          </label>
-        </div>
-
-        <label class="gb-label">
-          Video URL
-          <input id="videoUrlInput" type="url" class="gb-input" />
-        </label>
-
-        <button id="addVideoBtn" class="gb-btn ghost-primary">Add Video</button>
-      </section>
-
-      <section class="gb-panel">
-        <h2>Search Videos</h2>
-        <input id="videoSearch" type="text" class="gb-input" />
-        <ul id="videoList" class="item-list"></ul>
-      </section>
-    </section>
-
-    <!-- GUIDES -->
-    <section id="view-guides" class="gb-view">
-      <section class="gb-panel">
-        <h2>Guides</h2>
-        <div class="gb-row">
-          <label class="gb-label gb-col">
-            Title
-            <input id="guideTitle" type="text" class="gb-input" />
-          </label>
-          <label class="gb-label gb-col">
-            Category
-            <input id="guideCategory" type="text" class="gb-input" />
-          </label>
-        </div>
-
-        <label class="gb-label">
-          Guide content
-          <textarea id="guideContent" class="gb-textarea" rows="6"></textarea>
-        </label>
-
-        <button id="addGuideBtn" class="gb-btn ghost-primary">Save Guide</button>
-      </section>
-
-      <section class="gb-panel">
-        <h2>Search Guides</h2>
-        <input id="guideSearch" type="text" class="gb-input" />
-        <ul id="guideList" class="item-list"></ul>
-      </section>
-    </section>
-
-  </main>
-
-  <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
-  <script src="app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
+<script src="index.js"></script>
 </body>
 </html>
