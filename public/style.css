@@ -1,10 +1,8 @@
-/* =========================
-   GLOBAL BACKGROUND (FAVICON)
-========================= */
+/* GLOBAL BACKGROUND (GHOST ICON) */
 body {
   margin: 0;
   font-family: system-ui, sans-serif;
-  background: url("favicon.ico") center center / cover no-repeat fixed;
+  background: url("ghost.png") center center / cover no-repeat fixed;
   background-color: #000;
   position: relative;
   color: #fff;
@@ -23,15 +21,12 @@ body::before {
 /* Everything above background */
 .gb-header,
 .gb-main,
-.gb-panel,
-.gb-view {
+.gb-panel {
   position: relative;
   z-index: 2;
 }
 
-/* =========================
-   HEADER
-========================= */
+/* HEADER */
 .gb-header {
   display: flex;
   justify-content: space-between;
@@ -42,189 +37,161 @@ body::before {
   border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
+.gb-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .gb-logo {
   height: 40px;
 }
 
-.gb-title-block h1 {
+.gb-header h1 {
   margin: 0;
   font-size: 1.3rem;
-  font-weight: 600;
 }
 
-.gb-title-block p {
-  margin: 2px 0 0;
-  font-size: 0.8rem;
-  opacity: 0.7;
+/* NAV */
+.gb-nav {
+  display: flex;
+  gap: 8px;
 }
 
-/* =========================
-   NAV BUTTONS (BUBBLE)
-========================= */
-.gb-nav-btn {
-  padding: 10px 18px;
+/* GLOWING WHITE BUTTONS (NAV + ACTION) */
+.gb-nav-btn,
+.gb-btn {
+  padding: 10px 20px;
   border-radius: 999px;
-  border: none;
-  cursor: pointer;
-  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.12);
   color: #fff;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
+  cursor: pointer;
   transition: 0.2s ease;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  box-shadow: 0 0 14px rgba(255,255,255,0.45);
 }
 
-.gb-nav-btn:hover {
-  background: rgba(255,255,255,0.18);
-  transform: translateY(-2px);
+.gb-nav-btn:hover,
+.gb-btn:hover {
+  background: rgba(255,255,255,0.2);
+  box-shadow: 0 0 22px rgba(255,255,255,0.8);
+  transform: translateY(-1px);
 }
 
 .gb-nav-btn-active {
-  background: #00ff9f;
+  background: #fff;
   color: #000;
-  box-shadow: 0 0 18px rgba(0,255,159,0.5);
+  box-shadow: 0 0 26px rgba(255,255,255,0.95);
 }
 
-/* =========================
-   MAIN LAYOUT
-========================= */
+/* VARIANTS (still white glow, just slight tweaks) */
+.ghost-primary {
+  background: #ffffff;
+  color: #000;
+}
+
+.ghost-secondary {
+  background: rgba(255,255,255,0.18);
+}
+
+.ghost-outline {
+  background: transparent;
+  border: 2px solid #ffffff;
+}
+
+/* MAIN LAYOUT */
 .gb-main {
-  max-width: 1120px;
-  margin: 20px auto;
-  padding: 0 16px 40px;
+  max-width: 960px;
+  margin: 24px auto 40px;
+  padding: 0 16px;
 }
 
-.gb-view {
-  display: none;
-}
-
-.gb-view-active {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-}
-
-/* =========================
-   PANELS (GLASS)
-========================= */
+/* PANELS (GLASS) */
 .gb-panel {
-  background: rgba(0,0,0,0.55);
+  background: rgba(0,0,0,0.6);
   backdrop-filter: blur(12px);
   border-radius: 18px;
   padding: 18px;
   border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+  margin-bottom: 18px;
 }
 
 .gb-panel h2 {
   margin: 0 0 10px;
   font-size: 1rem;
-  color: #00ff9f;
-  letter-spacing: 0.05em;
+  color: #ffffff;
 }
 
-/* =========================
-   INPUTS
-========================= */
+/* INPUTS */
+.gb-label {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+}
+
 .gb-input,
-.gb-textarea,
-.gb-select {
+.gb-textarea {
   width: 100%;
   padding: 10px 12px;
   border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.15);
-  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.55);
   color: #fff;
   font-size: 0.9rem;
+  margin-top: 4px;
   transition: 0.2s ease;
 }
 
 .gb-input:focus,
-.gb-textarea:focus,
-.gb-select:focus {
-  border-color: #00ff9f;
-  box-shadow: 0 0 10px rgba(0,255,159,0.4);
+.gb-textarea:focus {
+  border-color: #ffffff;
+  box-shadow: 0 0 14px rgba(255,255,255,0.7);
+  outline: none;
 }
 
-/* =========================
-   BUBBLE BUTTONS
-========================= */
-.gb-btn {
-  padding: 12px 22px;
-  border-radius: 999px;
-  border: none;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: 0.2s ease;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+/* ROWS */
+.gb-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
 }
 
-.gb-btn:hover {
-  transform: translateY(-2px);
+/* LIST ITEMS */
+.item-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-/* Primary neon */
-.ghost-primary {
-  background: #00ff9f;
-  color: #000;
-  box-shadow: 0 0 18px rgba(0,255,159,0.5);
-}
-
-.ghost-primary:hover {
-  box-shadow: 0 0 28px rgba(0,255,159,0.7);
-}
-
-/* Secondary */
-.ghost-secondary {
-  background: rgba(255,255,255,0.12);
-  color: #fff;
-}
-
-/* Outline */
-.ghost-outline {
-  background: transparent;
-  border: 2px solid #00ff9f;
-  color: #00ff9f;
-}
-
-/* =========================
-   PREVIEW CARD
-========================= */
-.preview-card {
-  background: rgba(0,0,0,0.55);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 16px;
-  padding: 14px;
-  width: 3in;
-  min-height: 3in;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
-}
-
-.preview-logo {
-  height: 26px;
-}
-
-.preview-text {
-  font-size: 0.75rem;
-  opacity: 0.8;
-}
-
-/* =========================
-   LIST ITEMS
-========================= */
 .item-card {
-  background: rgba(0,0,0,0.55);
-  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(0,0,0,0.6);
   border-radius: 12px;
-  padding: 12px;
+  padding: 10px;
+  border: 1px solid rgba(255,255,255,0.15);
   margin-bottom: 8px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+  font-size: 0.85rem;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
-@media (max-width: 900px) {
-  .gb-view-active {
-    grid-template-columns: 1fr;
+/* QR PREVIEW */
+.qr-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 260px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 800px) {
+  .gb-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .gb-main {
+    margin-top: 16px;
   }
 }
