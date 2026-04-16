@@ -1,3 +1,6 @@
+<!-- =========================
+  index.html
+========================= -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +12,7 @@
 <body class="theme-ghost">
   <header class="gb-header">
     <div class="gb-header-left">
+      <!-- Replace src with the real GhostBoards logo asset -->
       <img src="ghostboards-logo.svg" alt="GhostBoards" class="gb-logo" />
       <div class="gb-title-block">
         <h1>GhostBoards QR Studio</h1>
@@ -21,21 +25,26 @@
   </header>
 
   <main class="gb-main">
+    <!-- CREATE QR PANEL -->
     <section class="gb-panel">
       <h2>Create QR</h2>
+
       <label class="gb-label">
-        Target URL (care page, video, or how‑to)
-        <input id="targetUrl" type="url" class="gb-input" placeholder="https://ghostboards.com/care/your-board" />
+        Target URL (care page or how‑to)
+        <input id="targetUrl" type="url" class="gb-input"
+               placeholder="https://ghostboards.com/care/your-board" />
       </label>
 
       <label class="gb-label">
-        Optional video URL
-        <input id="videoUrl" type="url" class="gb-input" placeholder="https://youtube.com/..." />
+        Optional video URL (YouTube, Vimeo, etc.)
+        <input id="videoUrl" type="url" class="gb-input"
+               placeholder="https://youtube.com/..." />
       </label>
 
       <label class="gb-label">
         Instructions title
-        <input id="titleInput" type="text" class="gb-input" placeholder="Board Care Guide" />
+        <input id="titleInput" type="text" class="gb-input"
+               placeholder="Board Care Guide" />
       </label>
 
       <label class="gb-label">
@@ -70,9 +79,10 @@
       <button id="generateBtn" class="gb-btn ghost-primary">Generate QR</button>
     </section>
 
+    <!-- PREVIEW PANEL -->
     <section class="gb-panel">
       <h2>Preview</h2>
-      <div class="preview-card">
+      <div id="previewCard" class="preview-card">
         <div class="preview-header">
           <img src="ghostboards-logo.svg" alt="GhostBoards" class="preview-logo" />
           <div>
@@ -81,19 +91,25 @@
           </div>
         </div>
         <div id="qrContainer" class="qr-container"></div>
-        <p id="previewInstructions" class="preview-text"></p>
+        <p id="previewInstructions" class="preview-text">
+          1. Wipe with damp cloth only. 2. Avoid soaking wheels. 3. Store in a cool, dry place.
+        </p>
+        <p id="previewVideoNote" class="preview-video-note"></p>
       </div>
 
       <div class="gb-row">
         <button id="downloadPngBtn" class="gb-btn ghost-secondary">Download PNG</button>
         <button id="downloadSvgBtn" class="gb-btn ghost-outline">Download SVG</button>
-        <button id="printBtn" class="gb-btn ghost-primary">Print Sheet</button>
+        <button id="printBtn" class="gb-btn ghost-primary">Print 3×3 Label</button>
       </div>
     </section>
 
+    <!-- PRESETS PANEL -->
     <section class="gb-panel">
       <h2>Saved Presets</h2>
-      <p class="gb-help-text">Save your favorite layouts (e.g., “Standard Board Care”, “Wheel Care”, “Beginner How‑To”).</p>
+      <p class="gb-help-text">
+        Save your favorite layouts (e.g., “Standard Board Care”, “Wheel Care”, “Beginner How‑To”).
+      </p>
       <div class="gb-row">
         <input id="presetName" type="text" class="gb-input" placeholder="Preset name" />
         <button id="savePresetBtn" class="gb-btn ghost-secondary">Save Preset</button>
@@ -101,21 +117,641 @@
       <ul id="presetList" class="preset-list"></ul>
     </section>
 
+    <!-- HELP PANEL -->
     <section class="gb-panel">
       <h2>How to use GhostBoards QR Studio</h2>
       <ol class="gb-steps">
-        <li>Paste the care page or video URL into “Target URL”.</li>
-        <li>(Optional) Add a separate video URL if you want a specific how‑to video referenced.</li>
+        <li>Paste the care page or how‑to URL into “Target URL”.</li>
+        <li>(Optional) Add a video URL if you want a specific how‑to video referenced.</li>
         <li>Set the title and short instructions that will print under the QR.</li>
         <li>Choose the QR size (3×3 is default for board stickers) and color.</li>
         <li>Click “Generate QR” to update the preview.</li>
-        <li>Click “Print Sheet” to print 3×3‑inch QR labels, or download PNG/SVG for your designer.</li>
+        <li>Click “Print 3×3 Label” to print a 3×3‑inch QR label, or download PNG/SVG.</li>
         <li>Save presets so you can reuse the same layout anytime.</li>
       </ol>
     </section>
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <!-- QR Code Styling library (supports PNG + SVG) -->
+  <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
+
+<!-- =========================
+  style.css
+========================= -->
+:root {
+  --gb-bg: #050608;
+  --gb-bg-alt: #0b0d12;
+  --gb-text: #f5f5f5;
+  --gb-muted: #9ca3af;
+  --gb-accent: #00ff9f;
+  --gb-accent-soft: rgba(0, 255, 159, 0.12);
+  --gb-border: #1f2933;
+  --gb-danger: #ff4b6a;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, #111827 0, #020308 55%, #000 100%);
+  color: var(--gb-text);
+  min-height: 100vh;
+}
+
+/* THEMES */
+body.theme-ghost {
+  --gb-bg: #050608;
+  --gb-bg-alt: #0b0d12;
+}
+
+body.theme-night {
+  --gb-bg: #000000;
+  --gb-bg-alt: #050608;
+}
+
+/* LAYOUT */
+.gb-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--gb-border);
+  background: linear-gradient(90deg, #020308, #050608 40%, #020308 100%);
+}
+
+.gb-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gb-logo {
+  height: 40px;
+  width: auto;
+}
+
+.gb-title-block h1 {
+  margin: 0;
+  font-size: 1.4rem;
+  letter-spacing: 0.04em;
+}
+
+.gb-title-block p {
+  margin: 2px 0 0;
+  font-size: 0.85rem;
+  color: var(--gb-muted);
+}
+
+.gb-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gb-main {
+  max-width: 1120px;
+  margin: 24px auto 40px;
+  padding: 0 16px 40px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+  gap: 20px;
+}
+
+.gb-panel {
+  background: radial-gradient(circle at top left, #111827 0, var(--gb-bg-alt) 40%, var(--gb-bg) 100%);
+  border-radius: 16px;
+  border: 1px solid var(--gb-border);
+  padding: 16px 18px 18px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+}
+
+.gb-panel h2 {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gb-accent);
+}
+
+.gb-label {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+  color: var(--gb-muted);
+}
+
+.gb-label input,
+.gb-label textarea,
+.gb-label select {
+  margin-top: 4px;
+}
+
+/* FORM ELEMENTS */
+.gb-input,
+.gb-textarea,
+.gb-select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--gb-border);
+  background: rgba(15, 23, 42, 0.9);
+  color: var(--gb-text);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.gb-input:focus,
+.gb-textarea:focus,
+.gb-select:focus {
+  border-color: var(--gb-accent);
+  box-shadow: 0 0 0 1px var(--gb-accent-soft);
+  background: rgba(15, 23, 42, 1);
+}
+
+.gb-textarea {
+  resize: vertical;
+}
+
+/* BUTTONS */
+.gb-btn {
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease,
+    transform 0.08s ease, box-shadow 0.15s ease;
+  white-space: nowrap;
+}
+
+.gb-btn:active {
+  transform: translateY(1px);
+}
+
+.ghost-primary {
+  background: var(--gb-accent);
+  color: #020308;
+  box-shadow: 0 0 18px rgba(0, 255, 159, 0.35);
+}
+
+.ghost-primary:hover {
+  box-shadow: 0 0 24px rgba(0, 255, 159, 0.55);
+}
+
+.ghost-secondary {
+  background: rgba(15, 23, 42, 0.9);
+  color: var(--gb-text);
+  border-color: var(--gb-border);
+}
+
+.ghost-secondary:hover {
+  border-color: var(--gb-accent);
+}
+
+.ghost-outline {
+  background: transparent;
+  color: var(--gb-accent);
+  border-color: var(--gb-accent-soft);
+}
+
+.ghost-outline:hover {
+  border-color: var(--gb-accent);
+}
+
+/* GRID HELPERS */
+.gb-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.gb-col {
+  flex: 1 1 0;
+  min-width: 120px;
+}
+
+/* PREVIEW CARD */
+.preview-card {
+  background: radial-gradient(circle at top, #020617 0, #020308 40%, #000 100%);
+  border-radius: 16px;
+  border: 1px solid var(--gb-border);
+  padding: 12px 12px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 3in;   /* default print size */
+  min-height: 3in;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.preview-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.preview-logo {
+  height: 28px;
+  width: auto;
+}
+
+.preview-header h3 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.preview-subtitle {
+  margin: 2px 0 0;
+  font-size: 0.75rem;
+  color: var(--gb-muted);
+}
+
+.qr-container {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  background: #ffffff;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.preview-text {
+  margin: 0;
+  font-size: 0.75rem;
+  text-align: left;
+  width: 100%;
+  color: var(--gb-muted);
+}
+
+.preview-video-note {
+  margin: 4px 0 0;
+  font-size: 0.7rem;
+  color: var(--gb-accent);
+  width: 100%;
+}
+
+/* PRESETS */
+.preset-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.preset-list li {
+  margin-bottom: 6px;
+}
+
+.preset-button {
+  width: 100%;
+  text-align: left;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--gb-border);
+  background: rgba(15, 23, 42, 0.9);
+  color: var(--gb-text);
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.preset-button span {
+  font-size: 0.75rem;
+  color: var(--gb-muted);
+}
+
+.preset-button:hover {
+  border-color: var(--gb-accent);
+}
+
+/* HELP TEXT */
+.gb-help-text {
+  margin: 0 0 8px;
+  font-size: 0.8rem;
+  color: var(--gb-muted);
+}
+
+.gb-steps {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 0.85rem;
+  color: var(--gb-muted);
+}
+
+.gb-steps li {
+  margin-bottom: 4px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .gb-main {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .preview-card {
+    margin-top: 8px;
+  }
+}
+
+/* PRINT STYLES */
+@media print {
+  body {
+    background: #ffffff !important;
+  }
+
+  .gb-header,
+  .gb-main > .gb-panel:not(:nth-child(2)) {
+    display: none !important;
+  }
+
+  .gb-main {
+    margin: 0;
+    padding: 0;
+  }
+
+  .gb-panel:nth-child(2) {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .preview-card {
+    border: none;
+    box-shadow: none;
+    margin: 0 auto;
+  }
+}
+
+<!-- =========================
+  app.js
+========================= -->
+// GhostBoards QR Studio logic (vanilla JS)
+
+document.addEventListener("DOMContentLoaded", () => {
+  const targetUrlInput = document.getElementById("targetUrl");
+  const videoUrlInput = document.getElementById("videoUrl");
+  const titleInput = document.getElementById("titleInput");
+  const instructionsInput = document.getElementById("instructionsInput");
+  const sizeSelect = document.getElementById("sizeSelect");
+  const colorSelect = document.getElementById("colorSelect");
+
+  const previewTitle = document.getElementById("previewTitle");
+  const previewInstructions = document.getElementById("previewInstructions");
+  const previewVideoNote = document.getElementById("previewVideoNote");
+  const previewCard = document.getElementById("previewCard");
+  const qrContainer = document.getElementById("qrContainer");
+
+  const generateBtn = document.getElementById("generateBtn");
+  const downloadPngBtn = document.getElementById("downloadPngBtn");
+  const downloadSvgBtn = document.getElementById("downloadSvgBtn");
+  const printBtn = document.getElementById("printBtn");
+  const themeToggle = document.getElementById("themeToggle");
+
+  const presetNameInput = document.getElementById("presetName");
+  const savePresetBtn = document.getElementById("savePresetBtn");
+  const presetList = document.getElementById("presetList");
+
+  // QR Code Styling instance
+  const qrCode = new QRCodeStyling({
+    width: 288, // 3in * 96dpi
+    height: 288,
+    type: "svg",
+    data: "https://ghostboards.com/",
+    image: "ghostboards-logo.svg",
+    margin: 4,
+    dotsOptions: {
+      color: "#000000",
+      type: "rounded"
+    },
+    backgroundOptions: {
+      color: "#ffffff"
+    },
+    imageOptions: {
+      crossOrigin: "anonymous",
+      margin: 4
+    }
+  });
+
+  qrCode.append(qrContainer);
+
+  // Helpers
+  function inchesToPixels(inches) {
+    const dpi = 96; // browser default
+    return Math.round(inches * dpi);
+  }
+
+  function applySize(inches) {
+    const px = inchesToPixels(inches);
+    qrCode.update({
+      width: px,
+      height: px
+    });
+    previewCard.style.width = inches + "in";
+    previewCard.style.minHeight = inches + "in";
+  }
+
+  function applyColor(mode) {
+    if (mode === "ghost-green") {
+      qrCode.update({
+        dotsOptions: { color: "#00ff9f", type: "rounded" },
+        backgroundOptions: { color: "#000000" }
+      });
+    } else if (mode === "white-on-black") {
+      qrCode.update({
+        dotsOptions: { color: "#ffffff", type: "rounded" },
+        backgroundOptions: { color: "#000000" }
+      });
+    } else {
+      // black
+      qrCode.update({
+        dotsOptions: { color: "#000000", type: "rounded" },
+        backgroundOptions: { color: "#ffffff" }
+      });
+    }
+  }
+
+  function buildDataUrl(target, video) {
+    if (!target && !video) {
+      return "https://ghostboards.com/";
+    }
+    if (target && !video) return target;
+    if (!target && video) return video;
+
+    // both present: simple query string wrapper
+    const encodedTarget = encodeURIComponent(target);
+    const encodedVideo = encodeURIComponent(video);
+    return `https://ghostboards.com/qr?care=${encodedTarget}&video=${encodedVideo}`;
+  }
+
+  function updatePreview() {
+    const target = targetUrlInput.value.trim();
+    const video = videoUrlInput.value.trim();
+    const title = titleInput.value.trim() || "Board Care Guide";
+    const instructions =
+      instructionsInput.value.trim() ||
+      "1. Wipe with damp cloth only. 2. Avoid soaking wheels. 3. Store in a cool, dry place.";
+    const sizeInches = parseFloat(sizeSelect.value) || 3;
+    const colorMode = colorSelect.value;
+
+    const dataUrl = buildDataUrl(target, video);
+
+    previewTitle.textContent = title;
+    previewInstructions.textContent = instructions;
+
+    if (video) {
+      previewVideoNote.textContent = "Includes how‑to video: " + video;
+    } else {
+      previewVideoNote.textContent = "";
+    }
+
+    applySize(sizeInches);
+    applyColor(colorMode);
+
+    qrCode.update({ data: dataUrl });
+  }
+
+  // Presets
+  const PRESET_KEY = "ghostboards_qr_presets";
+
+  function loadPresets() {
+    try {
+      const raw = localStorage.getItem(PRESET_KEY);
+      if (!raw) return [];
+      return JSON.parse(raw);
+    } catch {
+      return [];
+    }
+  }
+
+  function savePresets(list) {
+    localStorage.setItem(PRESET_KEY, JSON.stringify(list));
+  }
+
+  function renderPresets() {
+    const presets = loadPresets();
+    presetList.innerHTML = "";
+    if (!presets.length) return;
+
+    presets.forEach((preset, index) => {
+      const li = document.createElement("li");
+      const btn = document.createElement("button");
+      btn.className = "preset-button";
+      btn.type = "button";
+      btn.innerHTML = `
+        <span>${preset.name}</span>
+        <span>${preset.size}" • ${preset.color}</span>
+      `;
+      btn.addEventListener("click", () => {
+        targetUrlInput.value = preset.target || "";
+        videoUrlInput.value = preset.video || "";
+        titleInput.value = preset.title || "";
+        instructionsInput.value = preset.instructions || "";
+        sizeSelect.value = String(preset.size || "3");
+        colorSelect.value = preset.color || "black";
+        updatePreview();
+      });
+      li.appendChild(btn);
+      presetList.appendChild(li);
+    });
+  }
+
+  // Event handlers
+  generateBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    updatePreview();
+  });
+
+  downloadPngBtn.addEventListener("click", () => {
+    qrCode.download({
+      name: "ghostboards-qr",
+      extension: "png"
+    });
+  });
+
+  downloadSvgBtn.addEventListener("click", () => {
+    qrCode.download({
+      name: "ghostboards-qr",
+      extension: "svg"
+    });
+  });
+
+  printBtn.addEventListener("click", () => {
+    // Ensure preview is up to date before printing
+    updatePreview();
+    window.print();
+  });
+
+  themeToggle.addEventListener("click", () => {
+    const body = document.body;
+    if (body.classList.contains("theme-ghost")) {
+      body.classList.remove("theme-ghost");
+      body.classList.add("theme-night");
+    } else {
+      body.classList.remove("theme-night");
+      body.classList.add("theme-ghost");
+    }
+  });
+
+  savePresetBtn.addEventListener("click", () => {
+    const name = presetNameInput.value.trim();
+    if (!name) {
+      alert("Give the preset a name first.");
+      return;
+    }
+
+    const presets = loadPresets();
+    const preset = {
+      name,
+      target: targetUrlInput.value.trim(),
+      video: videoUrlInput.value.trim(),
+      title: titleInput.value.trim(),
+      instructions: instructionsInput.value.trim(),
+      size: parseFloat(sizeSelect.value) || 3,
+      color: colorSelect.value
+    };
+
+    // Replace if same name exists
+    const existingIndex = presets.findIndex((p) => p.name === name);
+    if (existingIndex >= 0) {
+      presets[existingIndex] = preset;
+    } else {
+      presets.push(preset);
+    }
+
+    savePresets(presets);
+    presetNameInput.value = "";
+    renderPresets();
+  });
+
+  // Live update on change (optional, feels nicer)
+  [targetUrlInput, videoUrlInput, titleInput, instructionsInput].forEach((el) => {
+    el.addEventListener("input", () => {
+      updatePreview();
+    });
+  });
+
+  [sizeSelect, colorSelect].forEach((el) => {
+    el.addEventListener("change", () => {
+      updatePreview();
+    });
+  });
+
+  // Initial render
+  renderPresets();
+  updatePreview();
+});
