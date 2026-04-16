@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  // --- QR INSTANCE ---
+  // QR instance
   const qr = new QRCodeStyling({
     width: 300,
     height: 300,
@@ -10,39 +10,36 @@ document.addEventListener("DOMContentLoaded", () => {
     backgroundOptions: { color: "transparent" }
   });
 
-  // --- ELEMENTS ---
+  // Elements
   const targetUrl = document.getElementById("targetUrl");
   const videoUrl = document.getElementById("videoUrl");
   const titleInput = document.getElementById("titleInput");
   const instructionsInput = document.getElementById("instructionsInput");
   const qrContainer = document.getElementById("qrContainer");
 
-  // --- PRELOAD FROM GUIDES/VIDEOS ---
+  // Preload from guides/videos
   const preload = localStorage.getItem("qrStudioTarget");
   if (preload) {
     targetUrl.value = preload;
     localStorage.removeItem("qrStudioTarget");
   }
 
-  // --- SAVE TO LIBRARY ---
+  // Save QR record
   function saveToLibrary(record) {
     const library = JSON.parse(localStorage.getItem("qrLibrary") || "[]");
     library.push(record);
     localStorage.setItem("qrLibrary", JSON.stringify(library));
   }
 
-  // --- GENERATE QR ---
-  document.getElementById("generateBtn").onclick = () => {
+  // Generate QR
+  document.getElementById("generateBtn").addEventListener("click", () => {
 
     const base = targetUrl.value.trim();
     const vid = videoUrl.value.trim();
     const title = titleInput.value.trim();
     const instructions = instructionsInput.value.trim();
 
-    if (!base) {
-      alert("Enter a Target URL first.");
-      return;
-    }
+    if (!base) return alert("Enter a Target URL first.");
 
     let finalUrl = base;
     if (vid) finalUrl += `?video=${encodeURIComponent(vid)}`;
@@ -68,17 +65,21 @@ document.addEventListener("DOMContentLoaded", () => {
       downloadCount: 0,
       printCount: 0
     });
-  };
+  });
 
-  // --- DOWNLOAD PNG ---
-  document.getElementById("downloadPngBtn").onclick = () =>
+  // Download PNG
+  document.getElementById("downloadPngBtn").addEventListener("click", () => {
     qr.download({ name: "qr", extension: "png" });
+  });
 
-  // --- DOWNLOAD SVG ---
-  document.getElementById("downloadSvgBtn").onclick = () =>
+  // Download SVG
+  document.getElementById("downloadSvgBtn").addEventListener("click", () => {
     qr.download({ name: "qr", extension: "svg" });
+  });
 
-  // --- PRINT ---
-  document.getElementById("printBtn").onclick = () => window.print();
+  // Print
+  document.getElementById("printBtn").addEventListener("click", () => {
+    window.print();
+  });
 
 });
