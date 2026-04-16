@@ -8,26 +8,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchEl = document.getElementById("guideSearch");
   const listEl = document.getElementById("guideList");
 
-  // Load guides
   function loadGuides() {
     return JSON.parse(localStorage.getItem("guides") || "[]");
   }
 
-  // Save guides
   function saveGuides(data) {
     localStorage.setItem("guides", JSON.stringify(data));
   }
 
-  // Add guide
   addBtn.onclick = () => {
     const title = titleEl.value.trim();
     const category = categoryEl.value.trim();
     const content = contentEl.value.trim();
 
-    if (!title || !content) {
-      alert("Title and content are required.");
-      return;
-    }
+    if (!title || !content) return;
 
     const guides = loadGuides();
 
@@ -48,7 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
     renderList();
   };
 
-  // Render list
   function renderList() {
     const guides = loadGuides();
     const search = searchEl.value.toLowerCase();
@@ -82,12 +75,11 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
-  // Handle actions
   listEl.addEventListener("click", e => {
-    const btn = e.target;
-    const action = btn.dataset.action;
-    if (!action) return;
+    const btn = e.target.closest("button[data-action]");
+    if (!btn) return;
 
+    const action = btn.dataset.action;
     const li = btn.closest("li");
     const id = li.dataset.id;
 
@@ -95,7 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const guide = guides.find(g => g.id === id);
     if (!guide) return;
 
-    // Generate QR
     if (action === "qr") {
       const qrUrl = `https://ghostboards.com/guide?id=${id}`;
       localStorage.setItem("qrStudioTarget", qrUrl);
@@ -103,13 +94,11 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Copy link
     if (action === "copy") {
       navigator.clipboard.writeText(`https://ghostboards.com/guide?id=${id}`);
       return;
     }
 
-    // Delete
     if (action === "delete") {
       const updated = guides.filter(g => g.id !== id);
       saveGuides(updated);
