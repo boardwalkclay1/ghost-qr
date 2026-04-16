@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Videos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<header class="gb-header">
+  <div class="gb-header-left">
+    <img src="ghostboards-logo.svg" class="gb-logo" />
+    <h1>Videos</h1>
+  </div>
+
+  <nav class="gb-nav">
+    <a href="index.html" class="gb-nav-btn">QR Studio</a>
+    <a href="videos.html" class="gb-nav-btn gb-nav-btn-active">Videos</a>
+    <a href="guides.html" class="gb-nav-btn">Guides</a>
+  </nav>
+</header>
+
+<main class="gb-main">
+
+  <section class="gb-panel">
+    <h2>Add Video</h2>
+
+    <label class="gb-label">Title
+      <input id="videoTitle" type="text" class="gb-input" />
+    </label>
+
+    <label class="gb-label">Category
+      <input id="videoCategory" type="text" class="gb-input" />
+    </label>
+
+    <label class="gb-label">Video URL
+      <input id="videoUrlInput" type="url" class="gb-input" />
+    </label>
+
+    <button id="addVideoBtn" class="gb-btn ghost-primary">Add Video</button>
+  </section>
+
+  <section class="gb-panel">
+    <h2>Search</h2>
+    <input id="videoSearch" type="text" class="gb-input" placeholder="Search..." />
+    <ul id="videoList" class="item-list"></ul>
+  </section>
+
+</main>
+
+<script src="videos.js"></script>
+</body>
+</html>
