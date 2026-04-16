@@ -3,17 +3,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const listEl = document.getElementById("qrList");
   const searchEl = document.getElementById("searchInput");
 
-  // Load library
   function loadLibrary() {
     return JSON.parse(localStorage.getItem("qrLibrary") || "[]");
   }
 
-  // Save library
   function saveLibrary(data) {
     localStorage.setItem("qrLibrary", JSON.stringify(data));
   }
 
-  // Render list
   function renderList() {
     const library = loadLibrary();
     const search = searchEl.value.toLowerCase();
@@ -48,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         listEl.appendChild(li);
 
-        // Render QR preview
         const qr = new QRCodeStyling({
           width: 120,
           height: 120,
@@ -62,12 +58,11 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
-  // Handle actions
   listEl.addEventListener("click", e => {
-    const btn = e.target;
-    const action = btn.dataset.action;
-    if (!action) return;
+    const btn = e.target.closest("button[data-action]");
+    if (!btn) return;
 
+    const action = btn.dataset.action;
     const li = btn.closest("li");
     const id = li.dataset.id;
 
@@ -75,7 +70,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const item = library.find(x => x.id === id);
     if (!item) return;
 
-    // Create QR instance for actions
     const qr = new QRCodeStyling({
       width: 300,
       height: 300,
@@ -85,19 +79,16 @@ document.addEventListener("DOMContentLoaded", () => {
       backgroundOptions: { color: "transparent" }
     });
 
-    // PNG download
     if (action === "png") {
       qr.download({ name: item.title || "qr", extension: "png" });
       item.downloadCount++;
     }
 
-    // SVG download
     if (action === "svg") {
       qr.download({ name: item.title || "qr", extension: "svg" });
       item.downloadCount++;
     }
 
-    // Print
     if (action === "print") {
       const w = window.open("");
       w.document.write(`<img src="${qr._svg}" />`);
@@ -106,7 +97,6 @@ document.addEventListener("DOMContentLoaded", () => {
       item.printCount++;
     }
 
-    // Delete
     if (action === "delete") {
       const updated = library.filter(x => x.id !== id);
       saveLibrary(updated);
