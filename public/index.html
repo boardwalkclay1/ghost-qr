@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>GhostBoards QR Studio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="theme-ghost">
+  <header class="gb-header">
+    <div class="gb-header-left">
+      <img src="ghostboards-logo.svg" alt="GhostBoards" class="gb-logo" />
+      <div class="gb-title-block">
+        <h1>GhostBoards QR Studio</h1>
+        <p>Create print‑ready QR codes for board care and how‑to videos.</p>
+      </div>
+    </div>
+    <div class="gb-header-right">
+      <button id="themeToggle" class="gb-btn ghost-outline">Switch Theme</button>
+    </div>
+  </header>
+
+  <main class="gb-main">
+    <section class="gb-panel">
+      <h2>Create QR</h2>
+      <label class="gb-label">
+        Target URL (care page, video, or how‑to)
+        <input id="targetUrl" type="url" class="gb-input" placeholder="https://ghostboards.com/care/your-board" />
+      </label>
+
+      <label class="gb-label">
+        Optional video URL
+        <input id="videoUrl" type="url" class="gb-input" placeholder="https://youtube.com/..." />
+      </label>
+
+      <label class="gb-label">
+        Instructions title
+        <input id="titleInput" type="text" class="gb-input" placeholder="Board Care Guide" />
+      </label>
+
+      <label class="gb-label">
+        Short instructions (printed under QR)
+        <textarea id="instructionsInput" class="gb-textarea" rows="3"
+          placeholder="1. Wipe with damp cloth only. 2. Avoid soaking wheels. 3. Store in a cool, dry place."></textarea>
+      </label>
+
+      <div class="gb-row">
+        <div class="gb-col">
+          <label class="gb-label">
+            QR size (inches)
+            <select id="sizeSelect" class="gb-select">
+              <option value="3">3 × 3 (default)</option>
+              <option value="2">2 × 2</option>
+              <option value="4">4 × 4</option>
+            </select>
+          </label>
+        </div>
+        <div class="gb-col">
+          <label class="gb-label">
+            Color
+            <select id="colorSelect" class="gb-select">
+              <option value="black">Black</option>
+              <option value="ghost-green">Ghost Green</option>
+              <option value="white-on-black">White on Black</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <button id="generateBtn" class="gb-btn ghost-primary">Generate QR</button>
+    </section>
+
+    <section class="gb-panel">
+      <h2>Preview</h2>
+      <div class="preview-card">
+        <div class="preview-header">
+          <img src="ghostboards-logo.svg" alt="GhostBoards" class="preview-logo" />
+          <div>
+            <h3 id="previewTitle">Board Care Guide</h3>
+            <p class="preview-subtitle">GhostBoards Care &amp; How‑To</p>
+          </div>
+        </div>
+        <div id="qrContainer" class="qr-container"></div>
+        <p id="previewInstructions" class="preview-text"></p>
+      </div>
+
+      <div class="gb-row">
+        <button id="downloadPngBtn" class="gb-btn ghost-secondary">Download PNG</button>
+        <button id="downloadSvgBtn" class="gb-btn ghost-outline">Download SVG</button>
+        <button id="printBtn" class="gb-btn ghost-primary">Print Sheet</button>
+      </div>
+    </section>
+
+    <section class="gb-panel">
+      <h2>Saved Presets</h2>
+      <p class="gb-help-text">Save your favorite layouts (e.g., “Standard Board Care”, “Wheel Care”, “Beginner How‑To”).</p>
+      <div class="gb-row">
+        <input id="presetName" type="text" class="gb-input" placeholder="Preset name" />
+        <button id="savePresetBtn" class="gb-btn ghost-secondary">Save Preset</button>
+      </div>
+      <ul id="presetList" class="preset-list"></ul>
+    </section>
+
+    <section class="gb-panel">
+      <h2>How to use GhostBoards QR Studio</h2>
+      <ol class="gb-steps">
+        <li>Paste the care page or video URL into “Target URL”.</li>
+        <li>(Optional) Add a separate video URL if you want a specific how‑to video referenced.</li>
+        <li>Set the title and short instructions that will print under the QR.</li>
+        <li>Choose the QR size (3×3 is default for board stickers) and color.</li>
+        <li>Click “Generate QR” to update the preview.</li>
+        <li>Click “Print Sheet” to print 3×3‑inch QR labels, or download PNG/SVG for your designer.</li>
+        <li>Save presets so you can reuse the same layout anytime.</li>
+      </ol>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
