@@ -8,26 +8,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchEl = document.getElementById("videoSearch");
   const listEl = document.getElementById("videoList");
 
-  // Load videos
   function loadVideos() {
     return JSON.parse(localStorage.getItem("videos") || "[]");
   }
 
-  // Save videos
   function saveVideos(data) {
     localStorage.setItem("videos", JSON.stringify(data));
   }
 
-  // Add video
   addBtn.onclick = () => {
     const title = titleEl.value.trim();
     const category = categoryEl.value.trim();
     const url = urlEl.value.trim();
 
-    if (!title || !url) {
-      alert("Title and Video URL are required.");
-      return;
-    }
+    if (!title || !url) return;
 
     const videos = loadVideos();
 
@@ -48,7 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
     renderList();
   };
 
-  // Render list
   function renderList() {
     const videos = loadVideos();
     const search = searchEl.value.toLowerCase();
@@ -83,12 +76,11 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
-  // Handle actions
   listEl.addEventListener("click", e => {
-    const btn = e.target;
-    const action = btn.dataset.action;
-    if (!action) return;
+    const btn = e.target.closest("button[data-action]");
+    if (!btn) return;
 
+    const action = btn.dataset.action;
     const li = btn.closest("li");
     const id = li.dataset.id;
 
@@ -96,7 +88,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const video = videos.find(v => v.id === id);
     if (!video) return;
 
-    // Generate QR
     if (action === "qr") {
       const qrUrl = `https://ghostboards.com/video?id=${id}`;
       localStorage.setItem("qrStudioTarget", qrUrl);
@@ -104,13 +95,11 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Copy link
     if (action === "copy") {
       navigator.clipboard.writeText(`https://ghostboards.com/video?id=${id}`);
       return;
     }
 
-    // Delete
     if (action === "delete") {
       const updated = videos.filter(v => v.id !== id);
       saveVideos(updated);
