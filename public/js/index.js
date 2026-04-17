@@ -65,6 +65,8 @@ document.addEventListener("DOMContentLoaded", () => {
       downloadCount: 0,
       printCount: 0
     });
+
+    loadQuickAccess(); // refresh quick access
   });
 
   // Download PNG
@@ -77,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
     qr.download({ name: "qr", extension: "svg" });
   });
 
-  // Share QR (AirDrop, Messages, Email, etc.)
+  // Share QR
   document.getElementById("shareBtn")?.addEventListener("click", async () => {
     try {
       const blob = await qr.getRawData("png");
@@ -116,5 +118,51 @@ document.addEventListener("DOMContentLoaded", () => {
     printWindow.print();
     printWindow.close();
   });
+
+  // -----------------------------
+  // QUICK ACCESS LIBRARY SECTION
+  // -----------------------------
+  function loadQuickAccess() {
+    const guides = JSON.parse(localStorage.getItem("guides") || "[]");
+    const videos = JSON.parse(localStorage.getItem("videos") || "[]");
+    const qrs = JSON.parse(localStorage.getItem("qrLibrary") || "[]");
+
+    const gList = document.getElementById("quickGuides");
+    const vList = document.getElementById("quickVideos");
+    const qList = document.getElementById("quickQr");
+
+    if (!gList || !vList || !qList) return;
+
+    gList.innerHTML = guides.slice(-5).map(g =>
+      `<li class="ql-item" data-url="https://ghost-qr.pages.dev/pages/view-guide.html?id=${g.id}">
+        ${g.title}
+      </li>`
+    ).join("");
+
+    vList.innerHTML = videos.slice(-5).map(v =>
+      `<li class="ql-item" data-url="https://ghost-qr.pages.dev/pages/view-video.html?id=${v.id}">
+        ${v.title}
+      </li>`
+    ).join("");
+
+    qList.innerHTML = qrs.slice(-5).map(q =>
+      `<li class="ql-item" data-url="${q.finalUrl}">
+        ${q.title || "QR"}
+      </li>`
+    ).join("");
+
+    document.querySelectorAll(".ql-item").forEach(li => {
+      li.onclick = () => {
+        const url = li.dataset.url;
+        targetUrl.value = url;
+
+        qr.update({ data: url });
+        qrContainer.innerHTML = "";
+        qr.append(qrContainer);
+      };
+    });
+  }
+
+  loadQuickAccess();
 
 });
