@@ -21,7 +21,7 @@
     <a href="/index.html" class="gb-nav-btn">QR Studio</a>
     <a href="/pages/videos.html" class="gb-nav-btn">Videos</a>
     <a href="/pages/guides.html" class="gb-nav-btn">Guides</a>
-     <a href="/pages/library.html" class="gb-nav-btn">library</a>
+    <a href="/pages/library.html" class="gb-nav-btn">Library</a>
     <a href="/pages/how-to.html" class="gb-nav-btn gb-nav-btn-active">How‑To</a>
   </nav>
 </header>
@@ -30,10 +30,10 @@
 
   <!-- SECTION 1 -->
   <section class="gb-panel">
-    <h2>1. What the App Does</h2>
+    <h2>1. What GhostBoards QR Studio Does</h2>
     <p>
-      GhostBoards QR Studio lets you create scannable QR labels for boards, wheels, parts, and product packaging.
-      Each QR can link to:
+      GhostBoards QR Studio creates scannable QR labels for boards, wheels, parts, packaging,
+      and customer support. Each QR can link to:
     </p>
 
     <ul class="item-list">
@@ -41,6 +41,7 @@
       <li class="item-card">How‑to videos</li>
       <li class="item-card">Product guides</li>
       <li class="item-card">Custom URLs</li>
+      <li class="item-card">Multi‑QR bundles (multiple items in one scan)</li>
     </ul>
   </section>
 
@@ -49,14 +50,14 @@
     <h2>2. Creating a QR Code</h2>
 
     <ol class="item-list">
-      <li class="item-card">Enter the **Target URL** — this is where the QR will send people.</li>
-      <li class="item-card">Optional: Add a **Video URL** to attach a tutorial or demo.</li>
-      <li class="item-card">Enter a **Title** (ex: “Board Care Guide”).</li>
-      <li class="item-card">Add **Instructions** (ex: cleaning steps, warnings, storage tips).</li>
-      <li class="item-card">Click **Generate QR**.</li>
+      <li class="item-card">Enter the <strong>Target URL</strong> — this is the main link.</li>
+      <li class="item-card">Optional: Add a <strong>Video URL</strong> to attach a tutorial.</li>
+      <li class="item-card">Enter a <strong>Title</strong> (ex: “Board Care Guide”).</li>
+      <li class="item-card">Add <strong>Instructions</strong> (ex: cleaning steps, warnings).</li>
+      <li class="item-card">Click <strong>Generate QR</strong>.</li>
     </ol>
 
-    <p>The QR preview will appear instantly.</p>
+    <p>The QR preview updates instantly.</p>
   </section>
 
   <!-- SECTION 3 -->
@@ -67,12 +68,58 @@
       <li class="item-card"><strong>PNG</strong> — best for printing labels.</li>
       <li class="item-card"><strong>SVG</strong> — best for print shops and large formats.</li>
       <li class="item-card"><strong>Print</strong> — prints a clean 3×3 label instantly.</li>
+      <li class="item-card"><strong>Share</strong> — AirDrop, Messages, Email, etc.</li>
     </ul>
   </section>
 
   <!-- SECTION 4 -->
   <section class="gb-panel">
-    <h2>4. Managing Videos</h2>
+    <h2>4. Using Quick Access</h2>
+
+    <p>
+      Quick Access shows your <strong>5 most recent Guides</strong> and <strong>5 most recent Videos</strong>.
+      You can load items instantly into the QR Studio.
+    </p>
+
+    <ul class="item-list">
+      <li class="item-card"><strong>Click</strong> an item → loads it into the QR generator.</li>
+      <li class="item-card"><strong>SHIFT‑Click</strong> → multi‑select mode.</li>
+      <li class="item-card"><strong>Combine Selected</strong> → builds a multi‑QR bundle.</li>
+      <li class="item-card"><strong>Clear Selection</strong> → resets multi‑select.</li>
+    </ul>
+
+    <p>
+      Multi‑QR bundles open a special viewer page:
+      <br>
+      <code>https://ghost-qr.pages.dev/pages/multi.html?items=[...]</code>
+    </p>
+  </section>
+
+  <!-- SECTION 5 -->
+  <section class="gb-panel">
+    <h2>5. Using the Burger Menu</h2>
+
+    <p>
+      The burger menu (☰) gives you full control over your entire library.
+      It includes:
+    </p>
+
+    <ul class="item-list">
+      <li class="item-card">Full list of all Guides</li>
+      <li class="item-card">Full list of all Videos</li>
+      <li class="item-card">Search bar for instant filtering</li>
+      <li class="item-card">“+” button to add items to Quick Access</li>
+      <li class="item-card">Tap an item to load it into the QR Studio</li>
+    </ul>
+
+    <p>
+      This is the fastest way to build multi‑QR bundles or load older items.
+    </p>
+  </section>
+
+  <!-- SECTION 6 -->
+  <section class="gb-panel">
+    <h2>6. Managing Videos</h2>
 
     <p>Go to the <strong>Videos</strong> page to add and organize your how‑to videos.</p>
 
@@ -80,15 +127,15 @@
       <li class="item-card">Enter a title (ex: “How to Clean Your Board”).</li>
       <li class="item-card">Enter a category (ex: “Care”, “Setup”, “Safety”).</li>
       <li class="item-card">Paste the video URL.</li>
-      <li class="item-card">Click **Add Video**.</li>
+      <li class="item-card">Click <strong>Add Video</strong>.</li>
     </ol>
 
     <p>Use the search bar to instantly filter your library.</p>
   </section>
 
-  <!-- SECTION 5 -->
+  <!-- SECTION 7 -->
   <section class="gb-panel">
-    <h2>5. Managing Guides</h2>
+    <h2>7. Managing Guides</h2>
 
     <p>Go to the <strong>Guides</strong> page to create written instructions or product manuals.</p>
 
@@ -96,22 +143,23 @@
       <li class="item-card">Enter a title (ex: “Wheel Rotation Guide”).</li>
       <li class="item-card">Enter a category (ex: “Maintenance”).</li>
       <li class="item-card">Write your guide content.</li>
-      <li class="item-card">Click **Save Guide**.</li>
+      <li class="item-card">Click <strong>Save Guide</strong>.</li>
     </ol>
 
     <p>Search instantly by title, category, or content.</p>
   </section>
 
-  <!-- SECTION 6 -->
+  <!-- SECTION 8 -->
   <section class="gb-panel">
-    <h2>6. Best Practices</h2>
+    <h2>8. Best Practices</h2>
 
     <ul class="item-list">
       <li class="item-card">Always test‑scan your QR before printing batches.</li>
-      <li class="item-card">Use **SVG** for print shops.</li>
-      <li class="item-card">Use **PNG** for home printers.</li>
+      <li class="item-card">Use <strong>SVG</strong> for print shops.</li>
+      <li class="item-card">Use <strong>PNG</strong> for home printers.</li>
       <li class="item-card">Keep instructions short and clear.</li>
       <li class="item-card">Use categories to stay organized.</li>
+      <li class="item-card">Use multi‑QR bundles for product kits or multi‑step guides.</li>
     </ul>
   </section>
 
