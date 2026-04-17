@@ -87,9 +87,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const guide = guides.find(g => g.id === id);
     if (!guide) return;
 
-    // --- B1 ROUTING FIX ---
+    // --- CORRECT DOMAIN ---
     if (action === "qr") {
-      const qrUrl = `https://ghostboards.pages.dev/pages/view-guide.html?id=${id}`;
+      const qrUrl = `https://ghost-qr.pages.dev/pages/view-guide.html?id=${id}`;
       localStorage.setItem("qrStudioTarget", qrUrl);
       window.location.href = "/index.html";
       return;
@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (action === "copy") {
       navigator.clipboard.writeText(
-        `https://ghostboards.pages.dev/pages/view-guide.html?id=${id}`
+        `https://ghost-qr.pages.dev/pages/view-guide.html?id=${id}`
       );
       return;
     }
