@@ -88,9 +88,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const video = videos.find(v => v.id === id);
     if (!video) return;
 
-    // --- B1 ROUTING FIX ---
+    // --- CORRECT DOMAIN ---
     if (action === "qr") {
-      const qrUrl = `https://ghostboards.pages.dev/pages/view-video.html?id=${id}`;
+      const qrUrl = `https://ghost-qr.pages.dev/pages/view-video.html?id=${id}`;
       localStorage.setItem("qrStudioTarget", qrUrl);
       window.location.href = "/index.html";
       return;
@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (action === "copy") {
       navigator.clipboard.writeText(
-        `https://ghostboards.pages.dev/pages/view-video.html?id=${id}`
+        `https://ghost-qr.pages.dev/pages/view-video.html?id=${id}`
       );
       return;
     }
