@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Guide Viewer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body class="viewer-body">
+
+  <main class="viewer-main">
+    <h1 id="guideTitle"></h1>
+    <p id="guideCategory"></p>
+    <article id="guideContent"></article>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    const guides = JSON.parse(localStorage.getItem("guides") || "[]");
+    const guide = guides.find(g => g.id === id);
+
+    if (!guide) {
+      document.body.innerHTML = "<h2>Guide not found.</h2>";
+    } else {
+      document.getElementById("guideTitle").innerText = guide.title;
+      document.getElementById("guideCategory").innerText =
+        guide.category ? "Category: " + guide.category : "";
+      document.getElementById("guideContent").innerText = guide.content;
+    }
+  </script>
+
+</body>
+</html>
