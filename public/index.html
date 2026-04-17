@@ -17,6 +17,8 @@
     <h1>QR Studio</h1>
   </div>
 
+  <button id="burgerBtn" class="burger-btn">☰</button>
+
   <nav class="gb-nav">
     <a href="/index.html" class="gb-nav-btn gb-nav-btn-active">QR Studio</a>
     <a href="/pages/videos.html" class="gb-nav-btn">Videos</a>
@@ -26,17 +28,35 @@
   </nav>
 </header>
 
+<!-- BURGER MENU FULL LIST -->
+<div id="burgerMenu" class="burger-menu">
+
+  <div class="burger-header">
+    <h2>All Items</h2>
+    <button id="burgerClose" class="burger-close">✕</button>
+  </div>
+
+  <input id="burgerSearch" class="burger-search" placeholder="Search..." />
+
+  <h3>Guides</h3>
+  <ul id="burgerGuides" class="burger-list"></ul>
+
+  <h3>Videos</h3>
+  <ul id="burgerVideos" class="burger-list"></ul>
+
+</div>
+
 <main class="gb-main">
 
   <!-- QR CREATOR -->
   <section class="gb-panel">
     <h2>Create QR</h2>
 
-    <label class="gb-label">Guide
+    <label class="gb-label">Target URL
       <input id="targetUrl" type="url" class="gb-input" />
     </label>
 
-    <label class="gb-label">Video
+    <label class="gb-label">Video URL
       <input id="videoUrl" type="url" class="gb-input" />
     </label>
 
@@ -64,7 +84,7 @@
     </div>
   </section>
 
-  <!-- QUICK ACCESS LIBRARY -->
+  <!-- QUICK ACCESS (5 items each) -->
   <section class="gb-panel">
     <h2>Quick Access</h2>
 
@@ -78,17 +98,14 @@
       <ul id="quickVideos" class="ql-list"></ul>
     </div>
 
-    <div class="ql-section">
-      <h3>QR Library</h3>
-      <ul id="quickQr" class="ql-list"></ul>
-    </div>
+    <button id="combineBtn" class="gb-btn ghost-primary">Combine Selected</button>
+    <button id="clearSelectionBtn" class="gb-btn ghost-danger">Clear Selection</button>
   </section>
 
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
 <script src="/js/index.js"></script>
-<script src="/js/quick-access.js"></script>
 
 </body>
 </html>
