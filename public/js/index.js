@@ -17,23 +17,37 @@ document.addEventListener("DOMContentLoaded", () => {
   const instructionsInput = document.getElementById("instructionsInput");
   const qrContainer = document.getElementById("qrContainer");
 
-  // Preload from guides/videos
+  // Burger menu elements
+  const burgerBtn = document.getElementById("burgerBtn");
+  const burgerMenu = document.getElementById("burgerMenu");
+  const burgerClose = document.getElementById("burgerClose");
+  const burgerSearch = document.getElementById("burgerSearch");
+  const burgerGuides = document.getElementById("burgerGuides");
+  const burgerVideos = document.getElementById("burgerVideos");
+
+  // Quick Access lists
+  const quickGuides = document.getElementById("quickGuides");
+  const quickVideos = document.getElementById("quickVideos");
+
+  // MULTI-SELECT STORAGE
+  let selectedItems = [];
+
+  // -----------------------------
+  // QR GENERATION
+  // -----------------------------
   const preload = localStorage.getItem("qrStudioTarget");
   if (preload) {
     targetUrl.value = preload;
     localStorage.removeItem("qrStudioTarget");
   }
 
-  // Save QR record
   function saveToLibrary(record) {
     const library = JSON.parse(localStorage.getItem("qrLibrary") || "[]");
     library.push(record);
     localStorage.setItem("qrLibrary", JSON.stringify(library));
   }
 
-  // Generate QR
   document.getElementById("generateBtn").addEventListener("click", () => {
-
     const base = targetUrl.value.trim();
     const vid = videoUrl.value.trim();
     const title = titleInput.value.trim();
@@ -44,14 +58,11 @@ document.addEventListener("DOMContentLoaded", () => {
     let finalUrl = base;
     if (vid) finalUrl += `?video=${encodeURIComponent(vid)}`;
 
-    // Update QR
     qr.update({ data: finalUrl });
 
-    // Render QR
     qrContainer.innerHTML = "";
     qr.append(qrContainer);
 
-    // Save record
     saveToLibrary({
       id: crypto.randomUUID(),
       title,
@@ -66,20 +77,17 @@ document.addEventListener("DOMContentLoaded", () => {
       printCount: 0
     });
 
-    loadQuickAccess(); // refresh quick access
+    loadQuickAccess();
   });
 
-  // Download PNG
   document.getElementById("downloadPngBtn").addEventListener("click", () => {
     qr.download({ name: "qr", extension: "png" });
   });
 
-  // Download SVG
   document.getElementById("downloadSvgBtn").addEventListener("click", () => {
     qr.download({ name: "qr", extension: "svg" });
   });
 
-  // Share QR
   document.getElementById("shareBtn")?.addEventListener("click", async () => {
     try {
       const blob = await qr.getRawData("png");
@@ -90,12 +98,11 @@ document.addEventListener("DOMContentLoaded", () => {
         text: "Scan this QR",
         files: [file]
       });
-    } catch (err) {
+    } catch {
       alert("Sharing not supported on this device.");
     }
   });
 
-  // Print ONLY the QR preview
   document.getElementById("printBtn").addEventListener("click", async () => {
     const blob = await qr.getRawData("png");
     const url = URL.createObjectURL(blob);
@@ -120,39 +127,111 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // -----------------------------
-  // QUICK ACCESS LIBRARY SECTION
+  // QUICK ACCESS (5 items each)
   // -----------------------------
   function loadQuickAccess() {
     const guides = JSON.parse(localStorage.getItem("guides") || "[]");
     const videos = JSON.parse(localStorage.getItem("videos") || "[]");
-    const qrs = JSON.parse(localStorage.getItem("qrLibrary") || "[]");
 
-    const gList = document.getElementById("quickGuides");
-    const vList = document.getElementById("quickVideos");
-    const qList = document.getElementById("quickQr");
-
-    if (!gList || !vList || !qList) return;
-
-    gList.innerHTML = guides.slice(-5).map(g =>
+    quickGuides.innerHTML = guides.slice(-5).map(g =>
       `<li class="ql-item" data-url="https://ghost-qr.pages.dev/pages/view-guide.html?id=${g.id}">
         ${g.title}
       </li>`
     ).join("");
 
-    vList.innerHTML = videos.slice(-5).map(v =>
+    quickVideos.innerHTML = videos.slice(-5).map(v =>
       `<li class="ql-item" data-url="https://ghost-qr.pages.dev/pages/view-video.html?id=${v.id}">
         ${v.title}
       </li>`
     ).join("");
 
-    qList.innerHTML = qrs.slice(-5).map(q =>
-      `<li class="ql-item" data-url="${q.finalUrl}">
-        ${q.title || "QR"}
+    bindQuickAccessClicks();
+  }
+
+  function bindQuickAccessClicks() {
+    document.querySelectorAll(".ql-item").forEach(li => {
+      li.onclick = (e) => {
+        if (e.shiftKey) {
+          toggleSelect(li);
+        } else {
+          const url = li.dataset.url;
+          targetUrl.value = url;
+
+          qr.update({ data: url });
+          qrContainer.innerHTML = "";
+          qr.append(qrContainer);
+        }
+      };
+    });
+  }
+
+  // -----------------------------
+  // MULTI-SELECT
+  // -----------------------------
+  function toggleSelect(li) {
+    const url = li.dataset.url;
+
+    if (selectedItems.includes(url)) {
+      selectedItems = selectedItems.filter(x => x !== url);
+      li.classList.remove("ql-selected");
+    } else {
+      selectedItems.push(url);
+      li.classList.add("ql-selected");
+    }
+  }
+
+  document.getElementById("combineBtn").onclick = () => {
+    if (selectedItems.length === 0) return;
+
+    const payload = encodeURIComponent(JSON.stringify(selectedItems));
+    const finalUrl = `https://ghost-qr.pages.dev/pages/multi.html?items=${payload}`;
+
+    targetUrl.value = finalUrl;
+
+    qr.update({ data: finalUrl });
+    qrContainer.innerHTML = "";
+    qr.append(qrContainer);
+  };
+
+  document.getElementById("clearSelectionBtn").onclick = () => {
+    selectedItems = [];
+    document.querySelectorAll(".ql-selected").forEach(el => el.classList.remove("ql-selected"));
+  };
+
+  // -----------------------------
+  // BURGER MENU (FULL LIST + SEARCH)
+  // -----------------------------
+  burgerBtn.onclick = () => burgerMenu.classList.add("open");
+  burgerClose.onclick = () => burgerMenu.classList.remove("open");
+
+  function loadBurgerMenu() {
+    const guides = JSON.parse(localStorage.getItem("guides") || "[]");
+    const videos = JSON.parse(localStorage.getItem("videos") || "[]");
+
+    burgerGuides.innerHTML = guides.map(g =>
+      `<li class="burger-item" data-url="https://ghost-qr.pages.dev/pages/view-guide.html?id=${g.id}">
+        ${g.title}
+        <button class="addQuick">+</button>
       </li>`
     ).join("");
 
-    document.querySelectorAll(".ql-item").forEach(li => {
-      li.onclick = () => {
+    burgerVideos.innerHTML = videos.map(v =>
+      `<li class="burger-item" data-url="https://ghost-qr.pages.dev/pages/view-video.html?id=${v.id}">
+        ${v.title}
+        <button class="addQuick">+</button>
+      </li>`
+    ).join("");
+
+    bindBurgerClicks();
+  }
+
+  function bindBurgerClicks() {
+    document.querySelectorAll(".burger-item").forEach(li => {
+      const addBtn = li.querySelector(".addQuick");
+
+      // Load into QR Studio
+      li.onclick = (e) => {
+        if (e.target.classList.contains("addQuick")) return;
         const url = li.dataset.url;
         targetUrl.value = url;
 
@@ -160,9 +239,42 @@ document.addEventListener("DOMContentLoaded", () => {
         qrContainer.innerHTML = "";
         qr.append(qrContainer);
       };
+
+      // Add to Quick Access
+      addBtn.onclick = (e) => {
+        e.stopPropagation();
+        addToQuick(li.dataset.url, li.textContent.trim());
+      };
     });
   }
 
+  function addToQuick(url, title) {
+    const list = url.includes("guide")
+      ? quickGuides
+      : quickVideos;
+
+    const li = document.createElement("li");
+    li.className = "ql-item";
+    li.dataset.url = url;
+    li.textContent = title;
+
+    list.appendChild(li);
+    bindQuickAccessClicks();
+  }
+
+  // SEARCH inside burger menu
+  burgerSearch.oninput = () => {
+    const term = burgerSearch.value.toLowerCase();
+
+    document.querySelectorAll(".burger-item").forEach(li => {
+      li.style.display = li.textContent.toLowerCase().includes(term)
+        ? "block"
+        : "none";
+    });
+  };
+
+  // INIT
   loadQuickAccess();
+  loadBurgerMenu();
 
 });
