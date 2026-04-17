@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
-  listEl.addEventListener("click", e => {
+  listEl.addEventListener("click", async e => {
     const btn = e.target.closest("button[data-action]");
     if (!btn) return;
 
@@ -90,10 +90,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (action === "print") {
-      const w = window.open("");
-      w.document.write(`<img src="${qr._svg}" />`);
-      w.print();
-      w.close();
+      const blob = await qr.getRawData("png");
+      const url = URL.createObjectURL(blob);
+
+      const printWindow = window.open("", "_blank");
+      printWindow.document.write(`
+        <html>
+        <head><title>${item.title || "QR Code"}</title></head>
+        <body style="text-align:center; padding:40px; font-family:sans-serif;">
+          <h2>${item.title || "QR Code"}</h2>
+          <img src="${url}" style="width:300px; height:300px;" />
+        </body>
+        </html>
+      `);
+
+      printWindow.document.close();
+      printWindow.focus();
+      printWindow.print();
+      printWindow.close();
+
       item.printCount++;
     }
 
