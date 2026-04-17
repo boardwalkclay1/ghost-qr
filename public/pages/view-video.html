@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Video Viewer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body class="viewer-body">
+
+  <main class="viewer-main">
+    <h1 id="videoTitle"></h1>
+    <p id="videoCategory"></p>
+    <div id="videoFrame"></div>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    const videos = JSON.parse(localStorage.getItem("videos") || "[]");
+    const video = videos.find(v => v.id === id);
+
+    if (!video) {
+      document.body.innerHTML = "<h2>Video not found.</h2>";
+    } else {
+      document.getElementById("videoTitle").innerText = video.title;
+      document.getElementById("videoCategory").innerText =
+        video.category ? "Category: " + video.category : "";
+
+      // Auto-embed YouTube or Vimeo
+      let embed = "";
+      if (video.url.includes("youtube.com") || video.url.includes("youtu.be")) {
+        const idMatch = video.url.split("v=")[1] || video.url.split("/").pop();
+        embed = `<iframe width="100%" height="300" src="https://www.youtube.com/embed/${idMatch}" frameborder="0" allowfullscreen></iframe>`;
+      } else {
+        embed = `<a href="${video.url}" target="_blank">${video.url}</a>`;
+      }
+
+      document.getElementById("videoFrame").innerHTML = embed;
+    }
+  </script>
+
+</body>
+</html>
