@@ -21,7 +21,8 @@ body::before {
 /* Everything above background */
 .gb-header,
 .gb-main,
-.gb-panel {
+.gb-panel,
+.burger-menu {
   position: relative;
   z-index: 2;
 }
@@ -58,7 +59,7 @@ body::before {
   gap: 8px;
 }
 
-/* GLOWING WHITE BUTTONS (NAV + ACTION) */
+/* GLOWING WHITE BUTTONS */
 .gb-nav-btn,
 .gb-btn {
   padding: 10px 20px;
@@ -85,7 +86,7 @@ body::before {
   box-shadow: 0 0 26px rgba(255,255,255,0.95);
 }
 
-/* VARIANTS (still white glow, just slight tweaks) */
+/* BUTTON VARIANTS */
 .ghost-primary {
   background: #ffffff;
   color: #000;
@@ -159,22 +160,6 @@ body::before {
   margin-top: 10px;
 }
 
-/* LIST ITEMS */
-.item-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.item-card {
-  background: rgba(0,0,0,0.6);
-  border-radius: 12px;
-  padding: 10px;
-  border: 1px solid rgba(255,255,255,0.15);
-  margin-bottom: 8px;
-  font-size: 0.85rem;
-}
-
 /* QR PREVIEW */
 .qr-container {
   display: flex;
@@ -183,15 +168,118 @@ body::before {
   min-height: 260px;
 }
 
-/* RESPONSIVE */
-@media (max-width: 800px) {
-  .gb-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
+/* QUICK ACCESS LIST */
+.ql-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
-  .gb-main {
-    margin-top: 16px;
+.ql-item {
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 10px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.ql-item:hover {
+  background: rgba(255,255,255,0.18);
+}
+
+/* MULTI-SELECT HIGHLIGHT */
+.ql-selected {
+  background: rgba(0,200,255,0.35);
+  border-left: 4px solid #00c8ff;
+}
+
+/* BURGER MENU */
+.burger-btn {
+  font-size: 1.6rem;
+  background: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: none;
+}
+
+@media (max-width: 800px) {
+  .burger-btn {
+    display: block;
   }
+}
+
+.burger-menu {
+  position: fixed;
+  top: 0;
+  right: -340px;
+  width: 320px;
+  height: 100vh;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(12px);
+  border-left: 1px solid rgba(255,255,255,0.1);
+  padding: 20px;
+  transition: 0.3s ease;
+  overflow-y: auto;
+}
+
+.burger-menu.open {
+  right: 0;
+}
+
+.burger-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.burger-close {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.burger-search {
+  width: 100%;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  margin: 12px 0;
+}
+
+.burger-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+}
+
+.burger-item {
+  padding: 10px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.burger-item:hover {
+  background: rgba(255,255,255,0.18);
+}
+
+.addQuick {
+  background: #fff;
+  color: #000;
+  border: none;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(255,255,255,0.7);
 }
