@@ -44,8 +44,19 @@ body::before {
   gap: 10px;
 }
 
+/* LOGO = BURGER TRIGGER */
 .gb-logo {
   height: 40px;
+}
+
+.burger-trigger {
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.burger-trigger:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 6px rgba(255,255,255,0.6));
 }
 
 .gb-header h1 {
@@ -194,22 +205,7 @@ body::before {
   border-left: 4px solid #00c8ff;
 }
 
-/* BURGER MENU */
-.burger-btn {
-  font-size: 1.6rem;
-  background: transparent;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  display: none;
-}
-
-@media (max-width: 800px) {
-  .burger-btn {
-    display: block;
-  }
-}
-
+/* BURGER MENU (LOGO TRIGGER) */
 .burger-menu {
   position: fixed;
   top: 0;
