@@ -77,9 +77,44 @@ document.addEventListener("DOMContentLoaded", () => {
     qr.download({ name: "qr", extension: "svg" });
   });
 
-  // Print
-  document.getElementById("printBtn").addEventListener("click", () => {
-    window.print();
+  // Share QR (AirDrop, Messages, Email, etc.)
+  document.getElementById("shareBtn")?.addEventListener("click", async () => {
+    try {
+      const blob = await qr.getRawData("png");
+      const file = new File([blob], "qr.png", { type: "image/png" });
+
+      await navigator.share({
+        title: "QR Code",
+        text: "Scan this QR",
+        files: [file]
+      });
+    } catch (err) {
+      alert("Sharing not supported on this device.");
+    }
+  });
+
+  // Print ONLY the QR preview
+  document.getElementById("printBtn").addEventListener("click", async () => {
+    const blob = await qr.getRawData("png");
+    const url = URL.createObjectURL(blob);
+
+    const title = titleInput.value.trim() || "QR Code";
+
+    const printWindow = window.open("", "_blank");
+    printWindow.document.write(`
+      <html>
+      <head><title>${title}</title></head>
+      <body style="text-align:center; padding:40px; font-family:sans-serif;">
+        <h2>${title}</h2>
+        <img src="${url}" style="width:300px; height:300px;" />
+      </body>
+      </html>
+    `);
+
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+    printWindow.close();
   });
 
 });
