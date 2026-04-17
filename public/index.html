@@ -21,14 +21,14 @@
     <a href="/index.html" class="gb-nav-btn gb-nav-btn-active">QR Studio</a>
     <a href="/pages/videos.html" class="gb-nav-btn">Videos</a>
     <a href="/pages/guides.html" class="gb-nav-btn">Guides</a>
-    <a href="/pages/library.html" class="gb-nav-btn">library</a>
-    <a href="/pages/how-to.html" class="gb-nav-btn">qr-manual</a>
-   
+    <a href="/pages/library.html" class="gb-nav-btn">Library</a>
+    <a href="/pages/how-to.html" class="gb-nav-btn">QR Manual</a>
   </nav>
 </header>
 
 <main class="gb-main">
 
+  <!-- QR CREATOR -->
   <section class="gb-panel">
     <h2>Create QR</h2>
 
@@ -51,6 +51,7 @@
     <button id="generateBtn" class="gb-btn ghost-primary">Generate QR</button>
   </section>
 
+  <!-- QR PREVIEW -->
   <section class="gb-panel">
     <h2>Preview</h2>
     <div id="qrContainer" class="qr-container"></div>
@@ -59,6 +60,27 @@
       <button id="downloadPngBtn" class="gb-btn ghost-secondary">PNG</button>
       <button id="downloadSvgBtn" class="gb-btn ghost-outline">SVG</button>
       <button id="printBtn" class="gb-btn ghost-primary">Print</button>
+      <button id="shareBtn" class="gb-btn ghost-secondary">Share</button>
+    </div>
+  </section>
+
+  <!-- QUICK ACCESS LIBRARY -->
+  <section class="gb-panel">
+    <h2>Quick Access</h2>
+
+    <div class="ql-section">
+      <h3>Guides</h3>
+      <ul id="quickGuides" class="ql-list"></ul>
+    </div>
+
+    <div class="ql-section">
+      <h3>Videos</h3>
+      <ul id="quickVideos" class="ql-list"></ul>
+    </div>
+
+    <div class="ql-section">
+      <h3>QR Library</h3>
+      <ul id="quickQr" class="ql-list"></ul>
     </div>
   </section>
 
@@ -66,5 +88,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
 <script src="/js/index.js"></script>
+<script src="/js/quick-access.js"></script>
+
 </body>
 </html>
