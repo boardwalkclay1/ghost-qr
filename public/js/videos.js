@@ -88,15 +88,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const video = videos.find(v => v.id === id);
     if (!video) return;
 
+    // --- B1 ROUTING FIX ---
     if (action === "qr") {
-      const qrUrl = `https://ghostboards.com/video?id=${id}`;
+      const qrUrl = `https://ghostboards.pages.dev/pages/view-video.html?id=${id}`;
       localStorage.setItem("qrStudioTarget", qrUrl);
       window.location.href = "/index.html";
       return;
     }
 
     if (action === "copy") {
-      navigator.clipboard.writeText(`https://ghostboards.com/video?id=${id}`);
+      navigator.clipboard.writeText(
+        `https://ghostboards.pages.dev/pages/view-video.html?id=${id}`
+      );
       return;
     }
 
