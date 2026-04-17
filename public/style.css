@@ -21,8 +21,7 @@ body::before {
 /* Everything above background */
 .gb-header,
 .gb-main,
-.gb-panel,
-.burger-menu {
+.gb-panel {
   position: relative;
   z-index: 2;
 }
@@ -205,15 +204,16 @@ body::before {
   border-left: 4px solid #00c8ff;
 }
 
-/* BURGER MENU (LOGO TRIGGER) */
+/* BURGER MENU — ALWAYS ON TOP */
 .burger-menu {
   position: fixed;
+  z-index: 9999; /* FIXED: now above everything */
   top: 0;
   right: -340px;
   width: 320px;
   height: 100vh;
-  background: rgba(0,0,0,0.85);
-  backdrop-filter: blur(12px);
+  background: rgba(0,0,0,0.88);
+  backdrop-filter: blur(14px);
   border-left: 1px solid rgba(255,255,255,0.1);
   padding: 20px;
   transition: 0.3s ease;
